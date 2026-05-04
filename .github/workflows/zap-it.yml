@@ -23,11 +23,11 @@ jobs:
               - 'package.json'
 
       - name: Set up Docker Buildx
-        # if: steps.filter.outputs.app_code == 'true'
+        if: steps.filter.outputs.app_code == 'true'
         uses: docker/setup-buildx-action@v3
 
       - name: Build and Load Image
-        # if: steps.filter.outputs.app_code == 'true'
+        if: steps.filter.outputs.app_code == 'true'
         uses: docker/build-push-action@v5
         with:
           context: .
