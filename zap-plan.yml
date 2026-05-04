@@ -36,4 +36,4 @@ jobs:
       template: "modern"
       reportDir: "/zap/wrk/"
       reportTitle: "DVWA Authenticated Scan Report"
-      reportFileName: "zap_report"
+      reportFile: "zap_report"
