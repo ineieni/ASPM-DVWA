@@ -10,14 +10,17 @@ env:
         parameters:
           loginPageUrl: "http://localhost:4280/login.php"
           loginPageWait: 5
-        # The standard default credentials for DVWA
-        users:
+      users:
           - name: "admin"
             credentials:
               username: "admin"
               password: "password"
       sessionManagement:
         method: "cookie"
+        parameters:
+          tokens:
+            - name: "security"
+              value: "medium"
 jobs:
   - type: spider
     parameters:
@@ -31,5 +34,6 @@ jobs:
   - type: report
     parameters:
       template: "modern"
+      reportDir: "/zap/wrk/"
       reportTitle: "DVWA Authenticated Scan Report"
       reportFileName: "zap_report"
