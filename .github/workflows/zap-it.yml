@@ -18,8 +18,8 @@ jobs:
         with:
           filters: |
             app_code:
-              - 'src/**'       # Adjust these to match your
-              - 'Dockerfile'   # app's actual folder structure
+              - 'src/**'      
+              - 'Dockerfile'  
               - 'package.json'
 
       - name: Set up Docker Buildx
