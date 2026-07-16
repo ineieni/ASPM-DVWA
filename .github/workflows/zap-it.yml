@@ -43,6 +43,7 @@ jobs:
         uses: zaproxy/action-af@d186d5d9536d0f1380e5eaa58168432fefc8ed6d
         with:
           plan: 'zap-plan.yml'
+          token: ${{ secrets.GITHUB_TOKEN }}
       - name: Upload ZAP Report
         if: always()
         uses: actions/upload-artifact@v4
