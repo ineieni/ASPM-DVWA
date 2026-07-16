@@ -25,13 +25,12 @@ jobs:
       - name: Set up Docker Buildx
         if: steps.filter.outputs.app_code == 'true'
         uses: docker/setup-buildx-action@v3
-       # might should change this
       - name: Build and Load Image
         if: steps.filter.outputs.app_code == 'true'
         uses: docker/build-push-action@v5
         with:
           context: .
-          load: true # add to local docker cache
+          load: true
           tags: ghcr.io/digininja/dvwa:latest
           cache-from: type=gha 
           cache-to: type=gha,mode=max
@@ -50,12 +49,25 @@ jobs:
           name: zap-authenticated-report
           path: zap_report.html
 
-      - name: Convert HTML Report to Markdown
+      - name: Install Pandoc
+        if: always()
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y pandoc
+
+      - name: Process Report Text Safely
         if: always()
         run: |
           if [ -f "zap_report.html" ]
           then
-            pandoc zap_report.html -f html -t markdown_strict -o zap_report_issue.md
+            pandoc zap_report.html -f html -t markdown_strict -o raw_issue.md
+            
+            head -n 500 raw_issue.md > safe_issue_body.md
+            
+            echo -e "\n\n...\n**Note:** The vulnerability report was truncated due to length. Please download the full 'zap_report.html' from this workflow's artifacts tab to view all detailed alerts." >> safe_issue_body.md
+          else
+            echo "Error: zap_report.html not found!"
+            exit 1
           fi
 
       - name: Create GitHub Issue From ZAP Report
@@ -63,15 +75,15 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          if [ -f "zap_report_issue.md" ];
+          if [ -f "safe_issue_body.md" ];
           then
             gh issue create \
               --title "DAST Security Vulnerabilities Found" \
-              --body-file zap_report_issue.md \
+              --body-file safe_issue_body.md \
               --label "security"
               
           else
-            echo "No zap_report_issue.md file found. Skipping issue creation."
+            echo "No safe_issue_body.md file found. Skipping issue creation."
           fi
           
       - name: Stop App
