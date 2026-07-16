@@ -43,14 +43,31 @@ jobs:
         uses: zaproxy/action-af@d186d5d9536d0f1380e5eaa58168432fefc8ed6d
         with:
           plan: 'zap-plan.yml'
-          token: ${{ secrets.GITHUB_TOKEN }}
       - name: Upload ZAP Report
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: zap-authenticated-report
-          path: zap_report.html
+          path: |
+            zap_report.html
+            zap_report.md
 
+      - name: Create GitHub Issue From ZAP Report
+        if: always() 
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          if [ -f "zap_report.md" ]; 
+          then
+            gh issue create \
+              --title "DAST Security Vulnerabilities Found" \
+              --body-file zap_report.md \
+              --label "security"
+              
+          else
+            echo "No zap_report.md file found. Skipping issue creation."
+          fi
+          
       - name: Stop App
         if: always()
         run: docker compose down
