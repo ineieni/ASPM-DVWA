@@ -37,3 +37,7 @@ jobs:
       reportDir: "/zap/wrk/"
       reportTitle: "DVWA Authenticated Scan Report"
       reportFile: "zap_report"
+    reports: 
+      - template: "traditional-md"
+        reportDir: "${GITHUB_WORKSPACE}"
+        reportFile: "zap_report.md"
