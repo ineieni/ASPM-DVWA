@@ -48,24 +48,31 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: zap-authenticated-report
-          path: |
-            zap_report.html
-            zap_report.md
+          path: zap_report.html
+
+      - name: Convert HTML Report to Markdown
+        if: always()
+        run: |
+          if [ -f "zap_report.html" ]
+          then
+            pandoc zap_report.html -f html -t markdown_strict -o zap_report_issue.md
+          fi
 
       - name: Create GitHub Issue From ZAP Report
         if: always() 
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          if [ -f "zap_report.md" ]; 
+          if [ -f "zap_report_issue.md" ]
           then
             gh issue create \
               --title "DAST Security Vulnerabilities Found" \
-              --body-file zap_report.md \
+              --body-file zap_report_issue.md \
               --label "security"
+          fi
               
           else
-            echo "No zap_report.md file found. Skipping issue creation."
+            echo "No zap_report_issue.md file found. Skipping issue creation."
           fi
           
       - name: Stop App
