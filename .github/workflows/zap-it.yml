@@ -40,7 +40,7 @@ jobs:
         run: docker compose up -d --no-build
 
       - name: ZAP Authenticated Scan
-        uses: zaproxy/action-af@main
+        uses: zaproxy/action-af@d186d5d9536d0f1380e5eaa58168432fefc8ed6d
         with:
           plan: 'zap-plan.yml'
       - name: Upload ZAP Report
