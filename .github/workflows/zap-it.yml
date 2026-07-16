@@ -63,13 +63,12 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          if [ -f "zap_report_issue.md" ]
+          if [ -f "zap_report_issue.md" ];
           then
             gh issue create \
               --title "DAST Security Vulnerabilities Found" \
               --body-file zap_report_issue.md \
               --label "security"
-          fi
               
           else
             echo "No zap_report_issue.md file found. Skipping issue creation."
