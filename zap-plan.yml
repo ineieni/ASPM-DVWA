@@ -37,7 +37,3 @@ jobs:
       reportDir: "/zap/wrk/"
       reportTitle: "DVWA Authenticated Scan Report"
       reportFile: "zap_report"
-    reports: 
-      - template: "traditional-md"
-        reportDir: "/zap/wrk/"
-        reportFile: "zap_report.md"
