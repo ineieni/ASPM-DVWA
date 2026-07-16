@@ -34,10 +34,10 @@ jobs:
   - type: report
     parameters:
       template: "modern"
-      reportDir: "${GITHUB_WORKSPACE}"
+      reportDir: "/zap/wrk/"
       reportTitle: "DVWA Authenticated Scan Report"
       reportFile: "zap_report"
     reports: 
       - template: "traditional-md"
-        reportDir: "${GITHUB_WORKSPACE}"
+        reportDir: "/zap/wrk/"
         reportFile: "zap_report.md"
