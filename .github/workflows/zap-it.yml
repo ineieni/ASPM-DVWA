@@ -77,7 +77,7 @@ jobs:
         run: |
           if [ -f "safe_issue_body.md" ];
           then
-            gh label create "security" --color "red" --description "Security vulnerabilities" || true
+            gh label create "security" --color CC0000 --description "Security vulnerabilities" || true
             gh issue create \
               --title "DAST Security Vulnerabilities Found" \
               --body-file safe_issue_body.md \
