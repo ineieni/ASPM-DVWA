@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<suppressions xmlns="https://github.io">
+
+    <!-- ===================================================================== -->
+    <!-- BOILERPLATE CONFIGURATION                                             -->
+    <!-- ===================================================================== -->
+
+    
+    <suppress>
+        <notes><![CDATA[ Vulnerable function not called by application ]]></notes>
+        <packageUrl regex="true">^pkg:npm/example-package@.*$</packageUrl>
+        <cve>CVE-2026-12345</cve>
+    </suppress>
+
+    <!-- TEMPLATE 2: SUPPRESS ALL CVES FOR AN INTERNAL/PROPRIETARY COMPONENT 
+    <suppress>
+        <notes><![CDATA[ False positive match: This is our own internal company utility library ]]></notes>
+        <filePath regex="true">.*my-internal-company-utils.*</filePath>
+        <cpe regex="true">cpe:/a:.*</cpe>
+    </suppress>
+    -->
+
+</suppressions>
