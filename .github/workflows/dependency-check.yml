@@ -21,7 +21,7 @@ jobs:
           format: 'HTML'
           out: 'reports'
           args: >
-            --suppression "../security/dependency-suppression.xml"
+            --suppression "security/dependency-suppression.xml"
             --enableExperimental
             # fail logic here in real app
       - name: Upload Scan Report
