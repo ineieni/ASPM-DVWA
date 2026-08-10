@@ -2,9 +2,9 @@ name: Dependency-Check SCA Scan
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "master" ]
   pull_request:
-    branches: [ "main" ]
+    branches: [ "master" ]
 
 jobs:
   scan:
