@@ -1,0 +1,32 @@
+name: Dependency-Check SCA Scan
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Run OWASP Dependency-Check
+        uses: dependency-check/Dependency-Check_Action@main
+        with:
+          project: 'ASPM-DVWA'
+          path: '.'
+          format: 'HTML'
+          out: 'reports'
+          args: >
+            --suppression "../security/dependency-suppression.xml"
+            --enableExperimental
+            # fail logic here in real app
+      - name: Upload Scan Report
+        uses: actions/upload-artifact@v4
+        if: always() 
+        with:
+          name: Dependency-Check Report
+          path: reports
